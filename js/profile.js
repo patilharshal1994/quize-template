@@ -14,6 +14,90 @@ const profileData = {
     averageScore: 85
 };
 
+// Sample transaction history data
+const transactions = [
+    {
+        id: 1,
+        type: 'subscription',
+        description: 'Premium Subscription - Monthly Plan',
+        amount: 29.99,
+        date: '2024-01-15',
+        status: 'completed',
+        paymentMethod: 'Credit Card',
+        transactionId: 'TXN-2024-001234'
+    },
+    {
+        id: 2,
+        type: 'payment',
+        description: 'Quiz Package - Advanced Mathematics',
+        amount: 19.99,
+        date: '2024-01-10',
+        status: 'completed',
+        paymentMethod: 'PayPal',
+        transactionId: 'TXN-2024-001189'
+    },
+    {
+        id: 3,
+        type: 'refund',
+        description: 'Refund - Quiz Package Purchase',
+        amount: -19.99,
+        date: '2024-01-08',
+        status: 'completed',
+        paymentMethod: 'Credit Card',
+        transactionId: 'TXN-2024-001156'
+    },
+    {
+        id: 4,
+        type: 'subscription',
+        description: 'Premium Subscription - Monthly Plan',
+        amount: 29.99,
+        date: '2023-12-15',
+        status: 'completed',
+        paymentMethod: 'Credit Card',
+        transactionId: 'TXN-2023-009876'
+    },
+    {
+        id: 5,
+        type: 'payment',
+        description: 'Quiz Package - Physics Fundamentals',
+        amount: 24.99,
+        date: '2023-12-10',
+        status: 'completed',
+        paymentMethod: 'Debit Card',
+        transactionId: 'TXN-2023-009654'
+    },
+    {
+        id: 6,
+        type: 'payment',
+        description: 'Quiz Package - Chemistry Basics',
+        amount: 19.99,
+        date: '2023-12-05',
+        status: 'pending',
+        paymentMethod: 'Credit Card',
+        transactionId: 'TXN-2023-009432'
+    },
+    {
+        id: 7,
+        type: 'subscription',
+        description: 'Premium Subscription - Monthly Plan',
+        amount: 29.99,
+        date: '2023-11-15',
+        status: 'completed',
+        paymentMethod: 'Credit Card',
+        transactionId: 'TXN-2023-008765'
+    },
+    {
+        id: 8,
+        type: 'payment',
+        description: 'Quiz Package - English Grammar',
+        amount: 15.99,
+        date: '2023-11-10',
+        status: 'failed',
+        paymentMethod: 'PayPal',
+        transactionId: 'TXN-2023-008543'
+    }
+];
+
 // Sample quiz results data
 const quizResults = [
     {
@@ -112,6 +196,7 @@ const quizResults = [
 document.addEventListener('DOMContentLoaded', function() {
     loadProfileData();
     loadQuizResults();
+    loadTransactions();
     setupEventListeners();
 });
 
@@ -203,6 +288,90 @@ function loadQuizResults(filter = 'all') {
     `).join('');
 }
 
+// Load transactions
+function loadTransactions(filter = 'all') {
+    const transactionList = document.getElementById('transactionList');
+    let filteredTransactions = transactions;
+    
+    if (filter === 'payment') {
+        filteredTransactions = transactions.filter(t => t.type === 'payment');
+    } else if (filter === 'subscription') {
+        filteredTransactions = transactions.filter(t => t.type === 'subscription');
+    } else if (filter === 'refund') {
+        filteredTransactions = transactions.filter(t => t.type === 'refund');
+    }
+    
+    if (filteredTransactions.length === 0) {
+        transactionList.innerHTML = `
+            <div class="empty-state">
+                <i class="bi bi-inbox"></i>
+                <h5>No transactions found</h5>
+                <p>You don't have any transactions yet.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Sort transactions by date (newest first)
+    filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    transactionList.innerHTML = filteredTransactions.map(transaction => `
+        <div class="transaction-item ${transaction.status}">
+            <div class="transaction-header">
+                <div class="transaction-info">
+                    <div class="transaction-icon ${transaction.type}">
+                        <i class="bi ${getTransactionIcon(transaction.type)}"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <h5>${transaction.description}</h5>
+                        <p>
+                            <span><i class="bi bi-calendar"></i> ${formatDate(transaction.date)}</span>
+                            <span><i class="bi bi-credit-card"></i> ${transaction.paymentMethod}</span>
+                            <span><i class="bi bi-hash"></i> ${transaction.transactionId}</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="transaction-amount">
+                    <span class="amount ${transaction.amount < 0 ? 'negative' : 'positive'}">
+                        ${transaction.amount < 0 ? '-' : '+'}$${Math.abs(transaction.amount).toFixed(2)}
+                    </span>
+                    <span class="status-badge ${transaction.status}">
+                        ${getStatusText(transaction.status)}
+                    </span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Get transaction icon based on type
+function getTransactionIcon(type) {
+    switch(type) {
+        case 'subscription':
+            return 'bi-calendar-check';
+        case 'payment':
+            return 'bi-cart-check';
+        case 'refund':
+            return 'bi-arrow-counterclockwise';
+        default:
+            return 'bi-wallet2';
+    }
+}
+
+// Get status text
+function getStatusText(status) {
+    switch(status) {
+        case 'completed':
+            return '<i class="bi bi-check-circle"></i> Completed';
+        case 'pending':
+            return '<i class="bi bi-clock"></i> Pending';
+        case 'failed':
+            return '<i class="bi bi-x-circle"></i> Failed';
+        default:
+            return status;
+    }
+}
+
 // Setup event listeners
 function setupEventListeners() {
     // Edit profile button
@@ -219,6 +388,11 @@ function setupEventListeners() {
     // Filter quiz results
     document.getElementById('filterStatus').addEventListener('change', function(e) {
         loadQuizResults(e.target.value);
+    });
+    
+    // Filter transactions
+    document.getElementById('filterTransaction').addEventListener('change', function(e) {
+        loadTransactions(e.target.value);
     });
     
     // Edit avatar button
@@ -287,21 +461,120 @@ function viewQuizDetails(quizId) {
     const quiz = quizResults.find(q => q.id === quizId);
     if (!quiz) return;
     
-    const details = `
-Quiz: ${quiz.quizName}
-Subject: ${quiz.subject}
-Chapter: ${quiz.chapter}
-Date: ${formatDate(quiz.date)}
-Score: ${quiz.score}%
-Marks: ${quiz.obtainedMarks} / ${quiz.totalMarks}
-Correct Answers: ${quiz.correctAnswers} / ${quiz.totalQuestions}
-Time Taken: ${quiz.timeTaken}
-Status: ${quiz.status === 'passed' ? 'Passed ✓' : 'Failed ✗'}
-Passing Marks: ${quiz.passingMarks}%
+    const modal = new bootstrap.Modal(document.getElementById('quizDetailsModal'));
+    const modalContent = document.getElementById('quizDetailsContent');
+    const retakeBtn = document.getElementById('retakeQuizBtn');
+    
+    // Build modal content
+    modalContent.innerHTML = `
+        <div class="quiz-detail-header">
+            <div class="quiz-detail-title">
+                <h4>${quiz.quizName}</h4>
+                <p class="quiz-detail-meta">
+                    <span><i class="bi bi-book"></i> ${quiz.subject}</span>
+                    <span><i class="bi bi-journal-text"></i> ${quiz.chapter}</span>
+                    <span><i class="bi bi-calendar"></i> ${formatDate(quiz.date)}</span>
+                </p>
+            </div>
+            <div class="quiz-detail-status">
+                <span class="status-badge ${quiz.status}">
+                    ${quiz.status === 'passed' ? '<i class="bi bi-check-circle"></i> Passed' : '<i class="bi bi-x-circle"></i> Failed'}
+                </span>
+            </div>
+        </div>
+        
+        <div class="quiz-detail-stats">
+            <div class="stat-card primary">
+                <div class="stat-icon">
+                    <i class="bi bi-trophy"></i>
+                </div>
+                <div class="stat-content">
+                    <label>Score</label>
+                    <h3>${quiz.score}%</h3>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="bi bi-check2-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <label>Marks</label>
+                    <h3>${quiz.obtainedMarks} / ${quiz.totalMarks}</h3>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="bi bi-question-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <label>Correct Answers</label>
+                    <h3>${quiz.correctAnswers} / ${quiz.totalQuestions}</h3>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="bi bi-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <label>Time Taken</label>
+                    <h3>${quiz.timeTaken}</h3>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quiz-detail-info">
+            <div class="info-row">
+                <div class="info-item">
+                    <label><i class="bi bi-percent"></i> Passing Marks</label>
+                    <p>${quiz.passingMarks}%</p>
+                </div>
+                <div class="info-item">
+                    <label><i class="bi bi-calculator"></i> Accuracy</label>
+                    <p>${Math.round((quiz.correctAnswers / quiz.totalQuestions) * 100)}%</p>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-item">
+                    <label><i class="bi bi-check-circle-fill"></i> Correct</label>
+                    <p class="text-success">${quiz.correctAnswers} questions</p>
+                </div>
+                <div class="info-item">
+                    <label><i class="bi bi-x-circle-fill"></i> Incorrect</label>
+                    <p class="text-danger">${quiz.totalQuestions - quiz.correctAnswers} questions</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quiz-detail-progress">
+            <div class="progress-info">
+                <label>Overall Performance</label>
+                <div class="progress" style="height: 25px;">
+                    <div class="progress-bar ${quiz.status === 'passed' ? 'bg-success' : 'bg-danger'}" 
+                         role="progressbar" 
+                         style="width: ${quiz.score}%" 
+                         aria-valuenow="${quiz.score}" 
+                         aria-valuemin="0" 
+                         aria-valuemax="100">
+                        ${quiz.score}%
+                    </div>
+                </div>
+            </div>
+        </div>
     `;
     
-    alert(details);
-    // In real app, this would open a detailed modal or navigate to a results page
+    // Show/hide retake button based on status
+    if (quiz.status === 'failed') {
+        retakeBtn.style.display = 'block';
+        retakeBtn.onclick = () => {
+            modal.hide();
+            // In real app, this would navigate to quiz start page
+            alert('Redirecting to quiz...');
+        };
+    } else {
+        retakeBtn.style.display = 'none';
+    }
+    
+    modal.show();
 }
 
 // Format date
