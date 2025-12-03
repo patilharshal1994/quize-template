@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Frequently Asked Questions | Quiz Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <i class="bi bi-trophy-fill"></i> Quiz Portal
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="quizzes.html">Quizzes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="faq.html">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn-login" href="login.html">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">Frequently Asked Questions</h1>
+            <p class="page-subtitle">Find answers to common questions about Quiz Portal</p>
+        </div>
+    </div>
+
+    <!-- FAQ Content -->
+    <div class="faq-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <!-- Search Box -->
+                    <div class="faq-search">
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input type="text" class="form-control" id="faqSearch" placeholder="Search for questions...">
+                        </div>
+                    </div>
+
+                    <!-- FAQ Categories -->
+                    <div class="faq-categories">
+                        <button class="category-btn active" data-category="all">All Questions</button>
+                        <button class="category-btn" data-category="account">Account</button>
+                        <button class="category-btn" data-category="quizzes">Quizzes</button>
+                        <button class="category-btn" data-category="payment">Payment</button>
+                        <button class="category-btn" data-category="technical">Technical</button>
+                    </div>
+
+                    <!-- FAQ Accordion -->
+                    <div class="accordion" id="faqAccordion">
+                        <!-- Account Questions -->
+                        <div class="accordion-item" data-category="account">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    <i class="bi bi-person-circle me-2"></i> How do I create an account?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Creating an account is simple! Click on the "Register" or "Sign Up" button on our homepage. Fill in your details including your name, email address, and create a secure password. Once you submit the form, you'll receive a verification email. Click the verification link in the email to activate your account.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item" data-category="account">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    <i class="bi bi-key me-2"></i> I forgot my password. How can I reset it?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    If you've forgotten your password, click on the "Forgot Password" link on the login page. Enter your registered email address, and we'll send you a password reset link. Click the link in the email to create a new password. Make sure to check your spam folder if you don't see the email.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item" data-category="account">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    <i class="bi bi-pencil-square me-2"></i> How do I update my profile information?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    You can update your profile information by logging into your account and navigating to the "Profile" section. Click on the "Edit Profile" button, make your changes, and click "Save Changes". Your updated information will be saved immediately.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quiz Questions -->
+                        <div class="accordion-item" data-category="quizzes">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    <i class="bi bi-question-circle me-2"></i> How do I take a quiz?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    To take a quiz, browse our quiz library and select the quiz you want to attempt. Click on the "Start Quiz" button. You'll see the questions one at a time. Read each question carefully, select your answer, and click "Next" to proceed. You can review and change your answers before submitting. Once you're done, click "Submit" to see your results.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item" data-category="quizzes">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    <i class="bi bi-clock me-2"></i> Is there a time limit for quizzes?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes, most quizzes have a time limit. The time limit is displayed before you start the quiz and also shown in the timer during the quiz. Once the time runs out, your quiz will be automatically submitted. Make sure to manage your time wisely to answer all questions.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item" data-category="quizzes">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                                    <i class="bi bi-arrow-counterclockwise me-2"></i> Can I retake a quiz?
+                                </button>
+                            </h2>
+                            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes, you can retake most quizzes. However, some quizzes may have restrictions on the number of attempts. Check the quiz details before starting. When you retake a quiz, your previous score will be saved, and you can see your improvement over time in your profile.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item" data-category="quizzes">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">
+                                    <i class="bi bi-trophy me-2"></i> How are quiz scores calculated?
+                                </button>
+                            </h2>
+                            <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Quiz scores are calculated based on the number of correct answers. Each question has a specific point value. Your total score is the sum of points for all correct answers. Some quizzes may have negative marking for incorrect answers, which will be mentioned in the quiz instructions. Your percentage score is calculated as (Obtained Marks / Total Marks) × 100.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment Questions -->
+                        <div class="accordion-item" data-category="payment">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq8">
+                                    <i class="bi bi-credit-card me-2"></i> What payment methods do you accept?
+                                </button>
+                            </h2>
+                            <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    We accept various payment methods including credit cards (Visa, MasterCard, American Express), debit cards, PayPal, and other secure payment gateways. All payments are processed through encrypted, secure payment processors to ensure your financial information is protected.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item" data-category="payment">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq9">
+                                    <i class="bi bi-arrow-counterclockwise me-2"></i> What is your refund policy?
+                                </button>
+                            </h2>
+                            <div id="faq9" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    We offer refunds for subscription cancellations within 7 days of purchase, provided you haven't used the service extensively. For quiz packages, refunds are available within 24 hours of purchase if you haven't started the quiz. To request a refund, contact our support team with your transaction ID.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item" data-category="payment">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq10">
+                                    <i class="bi bi-calendar-check me-2"></i> How do subscriptions work?
+                                </button>
+                            </h2>
+                            <div id="faq10" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Subscriptions are billed monthly or annually, depending on the plan you choose. You'll have access to all premium features, unlimited quiz attempts, and priority support during your subscription period. Subscriptions automatically renew unless you cancel them. You can cancel your subscription anytime from your account settings.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Technical Questions -->
+                        <div class="accordion-item" data-category="technical">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq11">
+                                    <i class="bi bi-browser-chrome me-2"></i> Which browsers are supported?
+                                </button>
+                            </h2>
+                            <div id="faq11" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Quiz Portal works best on modern browsers including Google Chrome, Mozilla Firefox, Microsoft Edge, Safari, and Opera. We recommend using the latest version of these browsers for the best experience. Some features may not work properly on older browser versions.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item" data-category="technical">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq12">
+                                    <i class="bi bi-phone me-2"></i> Can I use Quiz Portal on mobile devices?
+                                </button>
+                            </h2>
+                            <div id="faq12" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes! Quiz Portal is fully responsive and works on mobile devices, tablets, and desktops. You can access all features, take quizzes, and manage your account from any device with an internet connection. We recommend using a stable internet connection for the best experience.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item" data-category="technical">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq13">
+                                    <i class="bi bi-shield-check me-2"></i> Is my data secure?
+                                </button>
+                            </h2>
+                            <div id="faq13" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Absolutely! We take data security seriously. All data is encrypted using SSL/TLS protocols. We follow industry-standard security practices and never share your personal information with third parties without your consent. For more details, please read our Privacy Policy.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item" data-category="technical">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq14">
+                                    <i class="bi bi-question-diamond me-2"></i> What should I do if I encounter technical issues?
+                                </button>
+                            </h2>
+                            <div id="faq14" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    If you encounter any technical issues, try refreshing the page or clearing your browser cache first. If the problem persists, contact our support team through the Contact page or email us at support@quiz-portal.com. Please include details about the issue, your browser, and device information for faster resolution.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Still Have Questions -->
+                    <div class="faq-contact">
+                        <div class="faq-contact-box">
+                            <i class="bi bi-envelope-heart"></i>
+                            <h4>Still have questions?</h4>
+                            <p>Can't find the answer you're looking for? Please contact our friendly support team.</p>
+                            <a href="contact.html" class="btn btn-primary">
+                                <i class="bi bi-chat-dots"></i> Contact Us
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <h3><i class="bi bi-trophy-fill"></i> Quiz Portal</h3>
+                        <p>Your premier destination for interactive learning and knowledge assessment. Test your understanding, track your progress, and excel in your academic journey.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-twitter"></i></a>
+                            <a href="#"><i class="bi bi-instagram"></i></a>
+                            <a href="#"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-widget">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="quizzes.html">Quizzes</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="faq.html">FAQ</a></li>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+                            <li><a href="contact.html">Help Center</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h4>Contact Info</h4>
+                        <ul class="contact-info">
+                            <li><i class="bi bi-geo-alt-fill"></i> Quiz District, Creative City, NY 10001</li>
+                            <li><i class="bi bi-telephone-fill"></i> +1 (234) 567-8900</li>
+                            <li><i class="bi bi-envelope-fill"></i> info@quiz-portal.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Quiz Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/faq.js"></script>
+</body>
+</html>
+
