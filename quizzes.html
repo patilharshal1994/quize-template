@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizzes - Quiz Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <i class="bi bi-trophy-fill"></i> Quiz Portal
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="quizzes.html">Quizzes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn-login" href="login.html">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">
+                <i class="bi bi-list-check"></i> Available Quizzes
+            </h1>
+            <p class="page-subtitle">Browse and select from our comprehensive quiz collection</p>
+        </div>
+    </section>
+
+    <!-- Page Content -->
+    <section class="page-content">
+        <div class="container">
+            <!-- Filter Section -->
+            <div class="row mb-4">
+                <div class="col-md-4 mb-3">
+                    <input type="text" class="form-control" placeholder="Search quizzes...">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <select class="form-select">
+                        <option>All Subjects</option>
+                        <option>Mathematics</option>
+                        <option>Science</option>
+                        <option>English</option>
+                        <option>History</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <button class="btn btn-primary w-100">
+                        <i class="bi bi-search me-2"></i>Filter
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quizzes Grid -->
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="quiz-card">
+                        <div class="quiz-badge">New</div>
+                        <h3>Mathematics Basics</h3>
+                        <div class="quiz-meta">
+                            <span><i class="bi bi-book"></i> Mathematics</span>
+                            <span><i class="bi bi-clock"></i> 30 min</span>
+                        </div>
+                        <p>Test your fundamental math skills with this comprehensive quiz covering algebra, geometry, and arithmetic.</p>
+                        <a href="quiz-start.html" class="btn btn-primary">Start Quiz</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="quiz-card">
+                        <div class="quiz-badge">Popular</div>
+                        <h3>Science Fundamentals</h3>
+                        <div class="quiz-meta">
+                            <span><i class="bi bi-book"></i> Science</span>
+                            <span><i class="bi bi-clock"></i> 25 min</span>
+                        </div>
+                        <p>Explore the basics of physics, chemistry, and biology with this engaging science quiz.</p>
+                        <a href="quiz-start.html" class="btn btn-primary">Start Quiz</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="quiz-card">
+                        <h3>English Grammar</h3>
+                        <div class="quiz-meta">
+                            <span><i class="bi bi-book"></i> English</span>
+                            <span><i class="bi bi-clock"></i> 20 min</span>
+                        </div>
+                        <p>Improve your English grammar skills with questions covering tenses, parts of speech, and more.</p>
+                        <a href="quiz-start.html" class="btn btn-primary">Start Quiz</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="quiz-card">
+                        <h3>World History</h3>
+                        <div class="quiz-meta">
+                            <span><i class="bi bi-book"></i> History</span>
+                            <span><i class="bi bi-clock"></i> 35 min</span>
+                        </div>
+                        <p>Test your knowledge of world history from ancient civilizations to modern times.</p>
+                        <a href="quiz-start.html" class="btn btn-primary">Start Quiz</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="quiz-card">
+                        <h3>Computer Science</h3>
+                        <div class="quiz-meta">
+                            <span><i class="bi bi-book"></i> Technology</span>
+                            <span><i class="bi bi-clock"></i> 40 min</span>
+                        </div>
+                        <p>Challenge yourself with questions about programming, algorithms, and computer fundamentals.</p>
+                        <a href="quiz-start.html" class="btn btn-primary">Start Quiz</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="quiz-card">
+                        <h3>Geography Quiz</h3>
+                        <div class="quiz-meta">
+                            <span><i class="bi bi-book"></i> Geography</span>
+                            <span><i class="bi bi-clock"></i> 25 min</span>
+                        </div>
+                        <p>Explore the world with questions about countries, capitals, landmarks, and geographical features.</p>
+                        <a href="quiz-start.html" class="btn btn-primary">Start Quiz</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <h3><i class="bi bi-trophy-fill"></i> Quiz Portal</h3>
+                        <p>Your premier destination for interactive learning and knowledge assessment.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-twitter"></i></a>
+                            <a href="#"><i class="bi bi-instagram"></i></a>
+                            <a href="#"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-widget">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="quizzes.html">Quizzes</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="faq.html">FAQ</a></li>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="terms.html">Terms & Conditions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h4>Contact Info</h4>
+                        <ul class="contact-info">
+                            <li><i class="bi bi-geo-alt-fill"></i> Quiz District, Creative City, NY 10001</li>
+                            <li><i class="bi bi-telephone-fill"></i> +1 (234) 567-8900</li>
+                            <li><i class="bi bi-envelope-fill"></i> info@quiz-portal.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Quiz Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary btn-lg-square back-to-top" style="display: none; position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%; z-index: 999;">
+        <i class="bi bi-arrow-up"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
