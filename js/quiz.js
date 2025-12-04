@@ -175,16 +175,55 @@ function initializeQuiz() {
 // Generate Question Numbers
 function generateQuestionNumbers() {
     const container = document.getElementById('question-numbers');
-    container.innerHTML = '';
+    const mobileContainer = document.getElementById('mobile-question-numbers');
     
-    for (let i = 0; i < quizData.totalQuestions; i++) {
+    if (container) {
+        container.innerHTML = '';
+    }
+    
+    if (mobileContainer) {
+        mobileContainer.innerHTML = '';
+    }
+    
+    const createQuestionNumber = (index, isMobile) => {
         const number = document.createElement('div');
         number.className = 'question-number';
-        number.setAttribute('data-number', i + 1);
-        number.onclick = () => goToQuestion(i);
-        number.id = `q-num-${i}`;
+        number.setAttribute('data-number', index + 1);
+        number.id = isMobile ? `mobile-q-num-${index}` : `q-num-${index}`;
+        number.onclick = () => {
+            goToQuestion(index);
+            // Close mobile nav after selection
+            if (isMobile) {
+                const mobileNav = document.getElementById('mobileQuestionNav');
+                if (mobileNav) {
+                    const bsCollapse = bootstrap.Collapse.getInstance(mobileNav);
+                    if (bsCollapse) {
+                        bsCollapse.hide();
+                    }
+                }
+            }
+        };
+        return number;
+    };
+    
+    for (let i = 0; i < quizData.totalQuestions; i++) {
+        if (container) {
+            container.appendChild(createQuestionNumber(i, false));
+        }
         
-        container.appendChild(number);
+        if (mobileContainer) {
+            mobileContainer.appendChild(createQuestionNumber(i, true));
+        }
+    }
+    
+    // Update mobile question count
+    const mobileQuestionCount = document.getElementById('mobile-question-count');
+    const mobileTotalCount = document.getElementById('mobile-total-count');
+    if (mobileQuestionCount) {
+        mobileQuestionCount.textContent = currentQuestionIndex + 1;
+    }
+    if (mobileTotalCount) {
+        mobileTotalCount.textContent = quizData.totalQuestions;
     }
     
     updateQuestionNumbers();
@@ -194,15 +233,30 @@ function generateQuestionNumbers() {
 function updateQuestionNumbers() {
     for (let i = 0; i < quizData.totalQuestions; i++) {
         const numElement = document.getElementById(`q-num-${i}`);
-        numElement.className = 'question-number';
+        const mobileNumElement = document.getElementById(`mobile-q-num-${i}`);
         
-        if (i === currentQuestionIndex) {
-            numElement.classList.add('current');
-        } else if (questionStatus[i] === 'answered') {
-            numElement.classList.add('answered');
-        } else if (questionStatus[i] === 'skipped') {
-            numElement.classList.add('skipped');
-        }
+        const updateElement = (element) => {
+            if (element) {
+                element.className = 'question-number';
+                
+                if (i === currentQuestionIndex) {
+                    element.classList.add('current');
+                } else if (questionStatus[i] === 'answered') {
+                    element.classList.add('answered');
+                } else if (questionStatus[i] === 'skipped') {
+                    element.classList.add('skipped');
+                }
+            }
+        };
+        
+        updateElement(numElement);
+        updateElement(mobileNumElement);
+    }
+    
+    // Update mobile question count
+    const mobileQuestionCount = document.getElementById('mobile-question-count');
+    if (mobileQuestionCount) {
+        mobileQuestionCount.textContent = currentQuestionIndex + 1;
     }
 }
 
@@ -218,6 +272,12 @@ function loadQuestion(index) {
     document.getElementById('current-question').textContent = index + 1;
     document.getElementById('question-text').textContent = question.text;
     document.querySelector('.question-marks strong').textContent = question.marks;
+    
+    // Update mobile question count
+    const mobileQuestionCount = document.getElementById('mobile-question-count');
+    if (mobileQuestionCount) {
+        mobileQuestionCount.textContent = index + 1;
+    }
     
     // Update progress bar
     const progress = ((index + 1) / quizData.totalQuestions) * 100;
