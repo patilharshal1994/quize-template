@@ -2,21 +2,46 @@
    Authentication Pages Styles
    =================================== */
 
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
 .auth-section {
-    padding: 80px 0;
+    padding: 15px 0;
     background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
-    min-height: calc(100vh - 200px);
+    height: 100vh;
     display: flex;
     align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+.auth-section .container {
+    max-width: 100%;
+    padding: 0 15px;
+}
+
+.auth-section .row {
+    margin: 0;
 }
 
 .auth-card {
     background: var(--white);
     border-radius: 16px;
-    padding: 40px;
+    padding: 30px;
     box-shadow: 0 8px 32px rgba(74, 144, 226, 0.15);
     border: 2px solid var(--light-blue);
     transition: all 0.3s ease;
+    max-height: 95vh;
+    overflow-y: auto;
 }
 
 .auth-card:hover {
@@ -25,22 +50,22 @@
 }
 
 .auth-header {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .auth-icon {
-    font-size: 4rem;
+    font-size: 3rem;
     color: var(--primary-blue);
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     display: block;
     animation: fadeInDown 0.6s ease-out;
 }
 
 .auth-header h2 {
     color: var(--dark-blue);
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .auth-header p {
@@ -50,7 +75,27 @@
 }
 
 .auth-form {
-    margin-top: 30px;
+    margin-top: 20px;
+}
+
+.auth-form .mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+.auth-form .form-text {
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: block;
+}
+
+.auth-form .row {
+    margin-left: -8px;
+    margin-right: -8px;
+}
+
+.auth-form .row > [class*="col-"] {
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .form-label {
@@ -68,8 +113,8 @@
 .form-control {
     border: 2px solid var(--light-blue);
     border-radius: 8px;
-    padding: 12px 15px;
-    font-size: 1rem;
+    padding: 10px 15px;
+    font-size: 0.95rem;
     transition: all 0.3s ease;
 }
 
@@ -155,7 +200,7 @@
 
 .auth-divider {
     text-align: center;
-    margin: 30px 0;
+    margin: 20px 0;
     position: relative;
 }
 
@@ -184,9 +229,10 @@
 
 .btn-social {
     flex: 1;
-    padding: 12px;
+    padding: 10px;
     border-radius: 8px;
     font-weight: 600;
+    font-size: 0.9rem;
     transition: all 0.3s ease;
     border: 2px solid var(--light-blue);
     background: var(--white);
@@ -234,19 +280,34 @@
 /* Responsive */
 @media (max-width: 768px) {
     .auth-section {
-        padding: 60px 0;
+        padding: 15px 0;
     }
     
     .auth-card {
-        padding: 30px 20px;
+        padding: 25px 20px;
+        max-height: 98vh;
     }
     
     .auth-icon {
-        font-size: 3rem;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+    
+    .auth-header {
+        margin-bottom: 15px;
     }
     
     .auth-header h2 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+    }
+    
+    .auth-form {
+        margin-top: 15px;
+    }
+    
+    .auth-divider {
+        margin: 15px 0;
     }
     
     .social-login {
@@ -259,16 +320,39 @@
 }
 
 @media (max-width: 576px) {
+    .auth-section {
+        padding: 10px 0;
+    }
+    
     .auth-card {
-        padding: 25px 15px;
+        padding: 20px 15px;
+        max-height: 99vh;
     }
     
     .auth-icon {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        margin-bottom: 8px;
+    }
+    
+    .auth-header {
+        margin-bottom: 12px;
     }
     
     .auth-header h2 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+    }
+    
+    .auth-form {
+        margin-top: 12px;
+    }
+    
+    .form-control {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .auth-divider {
+        margin: 12px 0;
     }
 }
 

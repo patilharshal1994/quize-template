@@ -1,6 +1,36 @@
 // Main JavaScript for Quiz Portal
 
+// Announcement Banner Functionality
+function closeAnnouncement() {
+    const announcementBanner = document.getElementById('announcementBanner');
+    if (announcementBanner) {
+        announcementBanner.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        announcementBanner.style.opacity = '0';
+        announcementBanner.style.transform = 'translateY(-100%)';
+        
+        setTimeout(() => {
+            announcementBanner.classList.add('hidden');
+            // Save to localStorage so it doesn't show again even after page refresh
+            localStorage.setItem('announcementClosed', 'true');
+        }, 300);
+    }
+}
+
+// Check if announcement was previously closed
+function checkAnnouncementStatus() {
+    const announcementBanner = document.getElementById('announcementBanner');
+    if (announcementBanner) {
+        const isClosed = localStorage.getItem('announcementClosed');
+        if (isClosed === 'true') {
+            // Hide the announcement if it was previously closed
+            announcementBanner.classList.add('hidden');
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Check announcement status on page load
+    checkAnnouncementStatus();
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
