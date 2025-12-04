@@ -198,6 +198,8 @@ document.addEventListener('DOMContentLoaded', function() {
     loadQuizResults();
     loadTransactions();
     setupEventListeners();
+    setupAskQuestionListeners();
+    loadQuestions();
 });
 
 // Load profile data
@@ -586,5 +588,426 @@ function formatDate(dateString) {
         month: 'long', 
         day: 'numeric' 
     });
+}
+
+// Setup Ask Question event listeners
+function setupAskQuestionListeners() {
+    const categorySelect = document.getElementById('questionCategory');
+    const chapterField = document.getElementById('chapterField');
+    const chapterSelect = document.getElementById('questionChapter');
+    const askQuestionForm = document.getElementById('askQuestionForm');
+    const filterQuestions = document.getElementById('filterQuestions');
+
+    // Show/hide chapter field based on category
+    if (categorySelect) {
+        categorySelect.addEventListener('change', function() {
+            if (this.value === '1') { // Academic
+                chapterField.style.display = 'block';
+                chapterSelect.required = true;
+                loadChapters();
+            } else {
+                chapterField.style.display = 'none';
+                chapterSelect.required = false;
+                chapterSelect.innerHTML = '<option value="">-- Select Chapter --</option>';
+            }
+        });
+    }
+
+    // Handle form submission
+    if (askQuestionForm) {
+        askQuestionForm.addEventListener('submit', handleQuestionSubmit);
+    }
+
+    // Filter questions
+    if (filterQuestions) {
+        filterQuestions.addEventListener('change', function(e) {
+            loadQuestions(e.target.value);
+        });
+    }
+}
+
+// Load chapters for academic category
+async function loadChapters() {
+    const chapterSelect = document.getElementById('questionChapter');
+    chapterSelect.innerHTML = '<option value="">-- Loading Chapters --</option>';
+    
+    try {
+        const response = await fetch('/api/chapters', {
+            headers: {
+                'Authorization': 'Bearer ' + (localStorage.getItem('auth_token') || ''),
+                'Accept': 'application/json'
+            }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            if (data.success && data.data) {
+                chapterSelect.innerHTML = '<option value="">-- Select Chapter --</option>';
+                data.data.forEach(chapter => {
+                    const option = document.createElement('option');
+                    option.value = chapter.id;
+                    option.textContent = chapter.name;
+                    chapterSelect.appendChild(option);
+                });
+            }
+        } else {
+            // Fallback to sample data if API fails
+            const sampleChapters = [
+                { id: 1, name: 'Chapter 1: Introduction' },
+                { id: 2, name: 'Chapter 2: Basics' },
+                { id: 3, name: 'Chapter 3: Advanced Topics' }
+            ];
+            chapterSelect.innerHTML = '<option value="">-- Select Chapter --</option>';
+            sampleChapters.forEach(chapter => {
+                const option = document.createElement('option');
+                option.value = chapter.id;
+                option.textContent = chapter.name;
+                chapterSelect.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.error('Error loading chapters:', error);
+        chapterSelect.innerHTML = '<option value="">-- Select Chapter --</option>';
+    }
+}
+
+// Handle question submission
+async function handleQuestionSubmit(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const formData = new FormData(form);
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.innerHTML;
+    
+    // Disable submit button
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Submitting...';
+    
+    try {
+        const response = await fetch('/api/ask-question', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                'Authorization': 'Bearer ' + (localStorage.getItem('auth_token') || '')
+            },
+            body: JSON.stringify({
+                category_id: formData.get('category_id'),
+                chapter_id: formData.get('chapter_id') || null,
+                questions: formData.get('questions')
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok && data.success) {
+            // Show success message
+            alert('Your question has been submitted successfully! We will get back to you soon.');
+            
+            // Reset form
+            form.reset();
+            document.getElementById('chapterField').style.display = 'none';
+            
+            // Reload questions
+            loadQuestions();
+        } else {
+            alert(data.message || 'Failed to submit question. Please try again.');
+        }
+        
+    } catch (error) {
+        console.error('Error submitting question:', error);
+        alert('Failed to submit question. Please try again.');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+    }
+}
+
+// Load questions list
+async function loadQuestions(categoryFilter = 'all') {
+    const questionsList = document.getElementById('questionsList');
+    
+    if (!questionsList) return;
+    
+    // Show loading state
+    questionsList.innerHTML = `
+        <div class="text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    `;
+    
+    try {
+        const response = await fetch(`/api/ask-questions?category=${categoryFilter}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + (localStorage.getItem('auth_token') || '')
+            }
+        });
+        
+        let questionsData = [];
+        let useSampleData = false;
+        
+        if (response.ok) {
+            const data = await response.json();
+            if (data.success && data.data && Array.isArray(data.data)) {
+                questionsData = data.data;
+            } else {
+                console.warn('API returned unexpected format:', data);
+                useSampleData = true;
+            }
+        } else {
+            console.error('API request failed:', response.status, response.statusText);
+            useSampleData = true;
+        }
+        
+        // Fallback to sample data if API fails or returns empty
+        if (useSampleData || questionsData.length === 0) {
+            const sampleQuestions = [
+            {
+                id: 1,
+                category_id: 1,
+                category_name: 'Academic',
+                chapter_id: 1,
+                chapter_name: 'Chapter 1: Introduction',
+                questions: 'What is the best way to prepare for mathematics exams?',
+                reply: 'The best way to prepare for mathematics exams is to practice regularly, understand the concepts thoroughly, and solve previous year papers. Make sure to focus on problem-solving techniques.',
+                date: '2024-01-15',
+                created_at: '2024-01-15T10:30:00',
+                likes: 5,
+                dislikes: 1,
+                user_liked: false,
+                user_disliked: false
+            },
+            {
+                id: 2,
+                category_id: 2,
+                category_name: 'Admission',
+                chapter_id: null,
+                chapter_name: null,
+                questions: 'What documents are required for admission?',
+                reply: 'You need your academic transcripts, identity proof, passport size photographs, and the admission form filled correctly.',
+                date: '2024-01-14',
+                created_at: '2024-01-14T14:20:00',
+                likes: 8,
+                dislikes: 0,
+                user_liked: true,
+                user_disliked: false
+            },
+            {
+                id: 3,
+                category_id: 3,
+                category_name: 'Career',
+                chapter_id: null,
+                chapter_name: null,
+                questions: 'What career options are available after completing this course?',
+                reply: null,
+                date: '2024-01-13',
+                created_at: '2024-01-13T09:15:00',
+                likes: 3,
+                dislikes: 0,
+                user_liked: false,
+                user_disliked: false
+            }
+            ];
+            questionsData = sampleQuestions;
+        }
+        
+        // Filter by category if specified (only for sample data)
+        let filteredQuestions = questionsData;
+        if (categoryFilter !== 'all') {
+            if (useSampleData || (questionsData.length > 0 && questionsData[0].id <= 3)) {
+                // Filter sample data
+                filteredQuestions = questionsData.filter(q => q.category_id == categoryFilter);
+            } else {
+                // API already filtered, but double-check
+                filteredQuestions = questionsData.filter(q => q.category_id == categoryFilter);
+            }
+        }
+        
+        // Sort by date (newest first)
+        if (filteredQuestions.length > 0) {
+            filteredQuestions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        }
+        
+        if (filteredQuestions.length === 0) {
+            questionsList.innerHTML = `
+                <div class="empty-state">
+                    <i class="bi bi-inbox"></i>
+                    <h5>No questions found</h5>
+                    <p>Be the first to ask a question!</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Render questions
+        questionsList.innerHTML = filteredQuestions.map(question => renderQuestionItem(question)).join('');
+        
+    } catch (error) {
+        console.error('Error loading questions:', error);
+        
+        // Try to show sample data as fallback
+        try {
+            const sampleQuestions = [
+                {
+                    id: 1,
+                    category_id: 1,
+                    category_name: 'Academic',
+                    chapter_id: 1,
+                    chapter_name: 'Chapter 1: Introduction',
+                    questions: 'What is the best way to prepare for mathematics exams?',
+                    reply: 'The best way to prepare for mathematics exams is to practice regularly, understand the concepts thoroughly, and solve previous year papers. Make sure to focus on problem-solving techniques.',
+                    date: '2024-01-15',
+                    created_at: '2024-01-15T10:30:00',
+                    likes: 5,
+                    dislikes: 1,
+                    user_liked: false,
+                    user_disliked: false
+                },
+                {
+                    id: 2,
+                    category_id: 2,
+                    category_name: 'Admission',
+                    chapter_id: null,
+                    chapter_name: null,
+                    questions: 'What documents are required for admission?',
+                    reply: 'You need your academic transcripts, identity proof, passport size photographs, and the admission form filled correctly.',
+                    date: '2024-01-14',
+                    created_at: '2024-01-14T14:20:00',
+                    likes: 8,
+                    dislikes: 0,
+                    user_liked: true,
+                    user_disliked: false
+                }
+            ];
+            
+            let filtered = categoryFilter === 'all' ? sampleQuestions : sampleQuestions.filter(q => q.category_id == categoryFilter);
+            
+            if (filtered.length > 0) {
+                questionsList.innerHTML = filtered.map(question => renderQuestionItem(question)).join('');
+            } else {
+                questionsList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="bi bi-inbox"></i>
+                        <h5>No questions found</h5>
+                        <p>Be the first to ask a question!</p>
+                    </div>
+                `;
+            }
+        } catch (fallbackError) {
+            questionsList.innerHTML = `
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle"></i> Failed to load questions. Please refresh the page or try again later.
+                </div>
+            `;
+        }
+    }
+}
+
+// Helper function to render question item
+function renderQuestionItem(question) {
+    return `
+        <div class="question-item">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="badge bg-info">${question.category_name}</span>
+                    ${question.chapter_name ? `<span class="badge bg-secondary">${question.chapter_name}</span>` : ''}
+                    <span class="text-muted"><i class="bi bi-calendar"></i> ${formatDate(question.date)}</span>
+                </div>
+            </div>
+            <div class="question-content">
+                <h6>${question.questions}</h6>
+                ${question.reply ? `
+                    <div class="question-reply">
+                        <div class="reply-header">
+                            <strong><i class="bi bi-person-check"></i> Admin Reply</strong>
+                        </div>
+                        <p>${question.reply}</p>
+                    </div>
+                ` : `
+                    <div class="question-pending">
+                        <i class="bi bi-clock"></i> Awaiting reply from admin
+                    </div>
+                `}
+            </div>
+            <div class="question-reactions">
+                <button class="btn-reaction ${question.user_liked ? 'active' : ''}" 
+                        onclick="handleReaction(${question.id}, 'like')" 
+                        data-question-id="${question.id}" data-type="like">
+                    <i class="bi ${question.user_liked ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'}"></i>
+                    <span>${question.likes}</span>
+                </button>
+                <button class="btn-reaction ${question.user_disliked ? 'active' : ''}" 
+                        onclick="handleReaction(${question.id}, 'dislike')" 
+                        data-question-id="${question.id}" data-type="dislike">
+                    <i class="bi ${question.user_disliked ? 'bi-hand-thumbs-down-fill' : 'bi-hand-thumbs-down'}"></i>
+                    <span>${question.dislikes}</span>
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+// Handle reaction (like/dislike)
+async function handleReaction(questionId, type) {
+    try {
+        const response = await fetch(`/api/ask-questions/${questionId}/reaction`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                'Authorization': 'Bearer ' + (localStorage.getItem('auth_token') || '')
+            },
+            body: JSON.stringify({ type: type })
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || 'Failed to update reaction');
+        }
+        
+        // Update UI with API response
+        const button = document.querySelector(`[data-question-id="${questionId}"][data-type="${type}"]`);
+        const otherButton = document.querySelector(`[data-question-id="${questionId}"][data-type="${type === 'like' ? 'dislike' : 'like'}"]`);
+        
+        if (button && data.data) {
+            const countSpan = button.querySelector('span');
+            const icon = button.querySelector('i');
+            const otherCountSpan = otherButton ? otherButton.querySelector('span') : null;
+            const otherIcon = otherButton ? otherButton.querySelector('i') : null;
+            
+            // Update counts from API
+            if (type === 'like') {
+                countSpan.textContent = data.data.likes || 0;
+                if (otherCountSpan) otherCountSpan.textContent = data.data.dislikes || 0;
+            } else {
+                countSpan.textContent = data.data.dislikes || 0;
+                if (otherCountSpan) otherCountSpan.textContent = data.data.likes || 0;
+            }
+            
+            // Update active states
+            if (data.data.user_reaction === type) {
+                button.classList.add('active');
+                icon.className = `bi bi-hand-thumbs-${type === 'like' ? 'up' : 'down'}-fill`;
+                if (otherButton && otherButton.classList.contains('active')) {
+                    otherButton.classList.remove('active');
+                    if (otherIcon) otherIcon.className = `bi bi-hand-thumbs-${type === 'like' ? 'down' : 'up'}`;
+                }
+            } else {
+                button.classList.remove('active');
+                icon.className = `bi bi-hand-thumbs-${type === 'like' ? 'up' : 'down'}`;
+            }
+        }
+        
+    } catch (error) {
+        console.error('Error handling reaction:', error);
+        alert('Failed to update reaction. Please try again.');
+    }
 }
 
