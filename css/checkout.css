@@ -1,0 +1,344 @@
+/* ===================================
+   Checkout Page Styles
+   =================================== */
+
+.checkout-section {
+    padding: 60px 0 80px;
+    background: var(--light-gray);
+}
+
+.checkout-card {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.1);
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.package-summary,
+.billing-info,
+.payment-method {
+    border-bottom: 2px solid var(--light-blue);
+}
+
+.package-summary:last-child,
+.billing-info:last-child,
+.payment-method:last-child {
+    border-bottom: none;
+}
+
+.card-header-custom {
+    background: var(--light-blue);
+    padding: 20px 30px;
+    border-bottom: 2px solid var(--primary-blue);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-header-custom h4 {
+    color: var(--dark-blue);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-header-custom h4 i {
+    color: var(--primary-blue);
+}
+
+.card-body-custom {
+    padding: 30px;
+}
+
+.selected-package {
+    background: var(--light-blue);
+    border: 2px solid var(--primary-blue);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.selected-package h5 {
+    color: var(--dark-blue);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.selected-package .package-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+    margin: 10px 0;
+}
+
+.selected-package .package-features {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0;
+}
+
+.selected-package .package-features li {
+    padding: 5px 0;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.selected-package .package-features li i {
+    color: var(--primary-blue);
+    font-size: 0.9rem;
+}
+
+.form-label {
+    color: var(--dark-blue);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.form-control,
+.form-select {
+    border: 2px solid var(--light-blue);
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+    outline: none;
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.payment-option {
+    background: var(--light-blue);
+    border: 2px solid var(--light-blue);
+    border-radius: 8px;
+    padding: 15px 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.payment-option:hover {
+    border-color: var(--primary-blue);
+    background: rgba(74, 144, 226, 0.05);
+}
+
+.payment-option .form-check {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+}
+
+.payment-option .form-check-input {
+    margin-top: 0;
+    margin-right: 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.form-check-input[type=radio]{
+    margin-left: -9px !important;
+}
+
+.payment-option .form-check-input:checked {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+.payment-option .form-check-label {
+    color: var(--dark-blue);
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    flex: 1;
+}
+
+.payment-option .form-check-label i {
+    font-size: 1.3rem;
+    color: var(--primary-blue);
+}
+
+.card-payment-form {
+    background: var(--light-gray);
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    margin-left: 0;
+}
+
+.paypal-payment-info,
+.bank-payment-info {
+    margin-left: 0;
+}
+
+.order-summary-card {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.1);
+    position: sticky;
+    top: 100px;
+}
+
+.order-details {
+    padding: 0;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--light-blue);
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.order-label {
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.order-value {
+    color: var(--dark-blue);
+    font-weight: 600;
+}
+
+.order-item.order-total {
+    border-top: 2px solid var(--primary-blue);
+    border-bottom: none;
+    padding-top: 15px;
+    margin-top: 10px;
+}
+
+.order-item.order-total .order-label {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--dark-blue);
+}
+
+.order-item.order-total .order-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+}
+
+.order-divider {
+    height: 1px;
+    background: var(--light-blue);
+    margin: 10px 0;
+}
+
+.security-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    background: var(--light-blue);
+    border-radius: 8px;
+    color: var(--dark-blue);
+    font-weight: 600;
+}
+
+.security-badge i {
+    color: var(--primary-blue);
+    font-size: 1.3rem;
+}
+
+.checkout-terms {
+    text-align: center;
+    padding: 15px;
+    background: var(--light-gray);
+    border-radius: 8px;
+}
+
+.checkout-terms a {
+    color: var(--primary-blue);
+    text-decoration: none;
+}
+
+.checkout-terms a:hover {
+    text-decoration: underline;
+}
+
+.alert-info {
+    background: var(--light-blue);
+    border: 2px solid var(--primary-blue);
+    color: var(--dark-blue);
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.alert-info i {
+    color: var(--primary-blue);
+    margin-right: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .order-summary-card {
+        position: relative;
+        top: 0;
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .checkout-section {
+        padding: 40px 0 60px;
+    }
+
+    .card-header-custom {
+        padding: 15px 20px;
+    }
+
+    .card-header-custom h4 {
+        font-size: 1.1rem;
+    }
+
+    .card-body-custom {
+        padding: 20px;
+    }
+
+    .selected-package {
+        padding: 15px;
+    }
+
+    .selected-package .package-price {
+        font-size: 1.5rem;
+    }
+
+    .payment-option {
+        padding: 12px 15px;
+    }
+
+    .card-payment-form {
+        padding: 15px;
+    }
+
+    .order-item.order-total .order-value {
+        font-size: 1.3rem;
+    }
+}
+
